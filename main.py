@@ -2,6 +2,7 @@ import os
 import argparse
 import json
 from agent.graph import build_graph
+from agent.utils import extract_youtube_video_id, get_youtube_transcript
 
 
 def pretty_print(result: dict):
@@ -45,16 +46,28 @@ def pretty_print(result: dict):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--text", type=str, help="Input text")
+    parser.add_argument("--url", type=str, help="YouTube video URL")
     args = parser.parse_args()
 
-    if not args.text:
-        raise ValueError('No input. Try: python main.py --text "$(cat article.txt)"')
+    input_text = ""
+    if args.url:
+        try:
+            video_id = extract_youtube_video_id(args.url)
+            input_text = get_youtube_transcript(video_id)
+            print(f"YouTube transcript extracted (Length: {len(input_text)})")
+        except Exception as e:
+            print(f"Error extracting YouTube transcript: {e}")
+            return
+    elif args.text:
+        input_text = args.text
+    else:
+        raise ValueError('No input. Try: python main.py --url "https://youtu.be/..." or --text "..."')
 
     if not os.getenv("UPSTAGE_API_KEY"):
         raise ValueError("UPSTAGE_API_KEY not set")
 
     graph = build_graph()
-    result = graph.invoke({"input_text": args.text, "max_improve": 2})
+    result = graph.invoke({"input_text": input_text, "max_improve": 2})
     pretty_print(result)
 
 

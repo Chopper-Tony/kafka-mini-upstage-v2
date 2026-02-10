@@ -1,8 +1,0 @@
-langchain
-langchain-upstage
-langgraph
-faiss-cpu
-pydantic
-requests
-beautifulsoup4
-langchain-community

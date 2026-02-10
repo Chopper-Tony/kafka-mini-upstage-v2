@@ -18,7 +18,7 @@ SUMMARY_GROUNDED_PROMPT = """You are Kafka AI summarizer.
 You MUST follow these rules:
 1) Write the summary STRICTLY using ONLY the provided CONTEXT passages.
 2) If a needed detail is not in CONTEXT, write "없음" (do not guess).
-3) Summary must be Korean, 3-5 sentences.
+3) Summary must be Korean, exactly 3 sentences.
 4) Add citation markers like [C1], [C2] inline next to the claims you use.
 
 Return ONLY valid JSON with this schema:
@@ -79,7 +79,7 @@ Rewrite the SUMMARY to maximize faithfulness to CONTEXT.
 Rules:
 - Use ONLY CONTEXT.
 - Replace unsupported claims with "없음" or remove them.
-- Keep Korean 3-5 sentences and citation markers [C#].
+- Keep Korean exactly 3 sentences and citation markers [C#].
 
 Return ONLY valid JSON:
 {
