@@ -4,6 +4,7 @@ import json
 from langchain_upstage import ChatUpstage
 
 from agent.prompts import (
+    CLASSIFY_PROMPT,
     SUMMARY_GROUNDED_PROMPT,
     QUIZ_FROM_SUMMARY_PROMPT,
     JUDGE_PROMPT,
@@ -17,6 +18,20 @@ llm = ChatUpstage(
     temperature=0.2,
     api_key=os.environ["UPSTAGE_API_KEY"],
 )
+
+
+def classify_node(state):
+    article = state["input_text"]
+    resp = llm.invoke(CLASSIFY_PROMPT + "\n\n[CONTENT]\n" + article[:2000])
+    content_type = resp.content.strip()
+    
+    # Validation
+    if "지식형" in content_type:
+        state["content_type"] = "지식형"
+    else:
+        state["content_type"] = "일반형"
+        
+    return state
 
 
 def synthesize_node(state):

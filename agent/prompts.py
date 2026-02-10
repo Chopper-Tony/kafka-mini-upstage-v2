@@ -1,3 +1,20 @@
+CLASSIFY_PROMPT = """You are an expert content analyzer.
+Classify the following content into either "지식형" (Knowledge) or "일반형" (General/Healing).
+
+[Criteria]
+1) 지식형 (Knowledge):
+   - Definition: Content aimed at acquiring accurate information such as objective facts, technical specifications, and professional terminology.
+   - Key Question: Does it provide clear answers to 'What'? Is it effective for recall learning through quizzes?
+   - Value: Transforming short-term memory into long-term memory (Memorization).
+
+2) 일반형 (General/Healing):
+   - Definition: Content that induces reflection or contains the author's perspective (columns, essays, recipes, self-improvement).
+   - Key Question: Is it more valuable to organize thoughts (Reflection) or induce action (Action) rather than memorizing information?
+   - Value: Expanding thought and inducing practice (Internalization).
+
+Return ONLY "지식형" or "일반형". No extra text.
+"""
+
 QUERY_REWRITE_PROMPT = """You rewrite a retrieval query for summarizing an article.
 Focus on:
 - key statistics (numbers, percentages)

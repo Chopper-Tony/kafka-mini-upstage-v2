@@ -6,6 +6,8 @@ from agent.utils import extract_youtube_video_id, get_youtube_transcript
 
 
 def pretty_print(result: dict):
+    print(f"\n========== CONTENT TYPE: {result.get('content_type', 'N/A')} ==========")
+    
     print("\n========== SUMMARY ==========")
     try:
         s = json.loads(result.get("summary", "{}"))

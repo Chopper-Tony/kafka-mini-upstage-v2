@@ -1,16 +1,18 @@
 from langgraph.graph import StateGraph, END
 from agent.schemas import AgentState
-from agent.nodes import synthesize_node, judge_node, improve_node
+from agent.nodes import classify_node, synthesize_node, judge_node, improve_node
 
 
 def build_graph():
     g = StateGraph(AgentState)
 
+    g.add_node("classify", classify_node)
     g.add_node("synthesize", synthesize_node)
     g.add_node("judge", judge_node)
     g.add_node("improve", improve_node)
 
-    g.set_entry_point("synthesize")
+    g.set_entry_point("classify")
+    g.add_edge("classify", "synthesize")
     g.add_edge("synthesize", "judge")
 
     def route_after_judge(state: AgentState):
