@@ -1,3 +1,20 @@
+CLASSIFY_PROMPT = """You are an expert content analyzer.
+Classify the following content into either "지식형" (Knowledge) or "일반형" (General/Healing).
+
+[Criteria]
+1) 지식형 (Knowledge):
+   - Definition: Content aimed at acquiring accurate information such as objective facts, technical specifications, and professional terminology.
+   - Key Question: Does it provide clear answers to 'What'? Is it effective for recall learning through quizzes?
+   - Value: Transforming short-term memory into long-term memory (Memorization).
+
+2) 일반형 (General/Healing):
+   - Definition: Content that induces reflection or contains the author's perspective (columns, essays, recipes, self-improvement).
+   - Key Question: Is it more valuable to organize thoughts (Reflection) or induce action (Action) rather than memorizing information?
+   - Value: Expanding thought and inducing practice (Internalization).
+
+Return ONLY "지식형" or "일반형". No extra text.
+"""
+
 QUERY_REWRITE_PROMPT = """You rewrite a retrieval query for summarizing an article.
 Focus on:
 - key statistics (numbers, percentages)
@@ -18,7 +35,7 @@ SUMMARY_GROUNDED_PROMPT = """You are Kafka AI summarizer.
 You MUST follow these rules:
 1) Write the summary STRICTLY using ONLY the provided CONTEXT passages.
 2) If a needed detail is not in CONTEXT, write "없음" (do not guess).
-3) Summary must be Korean, 3-5 sentences.
+3) Summary must be Korean, exactly 3 sentences.
 4) Add citation markers like [C1], [C2] inline next to the claims you use.
 
 Return ONLY valid JSON with this schema:
@@ -79,7 +96,7 @@ Rewrite the SUMMARY to maximize faithfulness to CONTEXT.
 Rules:
 - Use ONLY CONTEXT.
 - Replace unsupported claims with "없음" or remove them.
-- Keep Korean 3-5 sentences and citation markers [C#].
+- Keep Korean exactly 3 sentences and citation markers [C#].
 
 Return ONLY valid JSON:
 {
